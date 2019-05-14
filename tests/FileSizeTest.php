@@ -53,6 +53,13 @@ class FileSizeTest extends PHPUnit_Framework_TestCase
         $this->assertSame($size->as('B'), 1073741824);
     }
 
+    public function testNoConvert()
+    {
+        $size = new FileSize('525 Gigabytes');
+
+        $this->assertSame($size->as('GB'), 525.0);
+    }
+
     public function testAuto1()
     {
         $size = new FileSize('1234522678.12 KB');
