@@ -99,13 +99,15 @@ class FileSize
     /**
      * Get the filesize in a given unit.
      *
-     * @param  string $newUnit Unit such as 'B', 'KB', etc
+     * @param  string $unitString Unit such as 'B', 'KB', etc
      * @param  int    $precision Round to this many decimal places
      * @return float|int
      */
-    public function as($newUnit, $precision = 2)
+    public function as($unitString, $precision = 2)
     {
-        return $this->convert($this->bytes, 'B', $newUnit, $precision);
+        $toUnit = $this->getUnit($unitString);
+
+        return $this->convert($this->bytes, 'B', $toUnit, $precision);
     }
 
     /**
@@ -182,7 +184,7 @@ class FileSize
         } else {
             preg_match('/^.*?([0-9\.]+)\s*?([a-zA-Z]+).*$/', $sizeString, $matches);
             $sizeObject->value = $matches[1];
-            $sizeObject->unit = $matches[2];
+            $sizeObject->unit = $this->getUnit($matches[2]);
         }
 
         return $sizeObject;
@@ -200,7 +202,7 @@ class FileSize
     }
 
     /**
-     * Change the filesize unit measurement using arbitrary unit strings.
+     * Change the filesize unit measurement using known units.
      *
      * @param  int    $size      The current size
      * @param  string $fromUnit  The current unit
@@ -210,9 +212,6 @@ class FileSize
      */
     private function convert($size, $fromUnit, $toUnit, $precision = null)
     {
-        $fromUnit = $this->getUnit($fromUnit);
-        $toUnit = $this->getUnit($toUnit);
-
         if ($fromUnit !== $toUnit) {
             $index1 = array_search($fromUnit, array_keys(self::$unitMap));
             $index2 = array_search($toUnit, array_keys(self::$unitMap));
