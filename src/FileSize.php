@@ -86,6 +86,17 @@ class FileSize
     }
 
     /**
+     * Divide the filesize by a number.
+     *
+     * @param  int|float $n A number
+     * @return self
+     */
+    public function divide($n)
+    {
+        return $this->multiply(1 / $n);
+    }
+
+    /**
      * Get the filesize in a given unit.
      *
      * @param  string $newUnit Unit such as 'B', 'KB', etc

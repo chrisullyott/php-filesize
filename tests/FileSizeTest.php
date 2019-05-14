@@ -39,6 +39,14 @@ class FileSizeTest extends PHPUnit_Framework_TestCase
         $this->assertSame($size->as('GB', 2), 0.73);
     }
 
+    public function testDivide()
+    {
+        $size = new FileSize('300K');
+        $size->divide(2);
+
+        $this->assertSame($size->as('KB'), 150.0);
+    }
+
     public function testConvertUp()
     {
         $size = new FileSize('123456789 TB');
