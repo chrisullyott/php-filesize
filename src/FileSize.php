@@ -105,7 +105,7 @@ class FileSize
      */
     public function as($unitString, $precision = 2)
     {
-        $toUnit = $this->getUnit($unitString);
+        $toUnit = $this->lookupUnit($unitString);
 
         return $this->convert($this->bytes, 'B', $toUnit, $precision);
     }
@@ -140,7 +140,7 @@ class FileSize
      * @param  string The unit string
      * @return string
      */
-    private function getUnit($unitString)
+    private function lookupUnit($unitString)
     {
         $lowerUnitString = strtolower($unitString);
 
@@ -184,7 +184,7 @@ class FileSize
         } else {
             preg_match('/^.*?([0-9\.]+)\s*?([a-zA-Z]+).*$/', $sizeString, $matches);
             $sizeObject->value = $matches[1];
-            $sizeObject->unit = $this->getUnit($matches[2]);
+            $sizeObject->unit = $this->lookupUnit($matches[2]);
         }
 
         return $sizeObject;
