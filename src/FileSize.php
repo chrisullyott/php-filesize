@@ -41,42 +41,6 @@ class FileSize
     }
 
     /**
-     * Get the filesize in a given unit.
-     *
-     * @param  string $newUnit Unit such as 'B', 'KB', etc
-     * @param  int    $precision Round to this many decimal places
-     * @return float|int
-     */
-    public function as($newUnit, $precision = 2)
-    {
-        return $this->convert($this->bytes, 'B', $newUnit, $precision);
-    }
-
-    /**
-     * Get the filesize in a human-friendly string.
-     *
-     * @param  int $precision Round to this many decimal places
-     * @return string
-     */
-    public function asAuto($precision = 2)
-    {
-        if (!is_int($precision)) {
-            throw new Exception('First argument must be an integer');
-        }
-
-        $factor = floor((strlen($this->bytes) - 1) / 3);
-        $value = $this->bytes / self::byteFactor($factor);
-        $units = array_keys(self::$unitMap);
-        $unit = $units[$factor];
-
-        if ($unit === 'B') {
-            return "{$value} B";
-        }
-
-        return sprintf("%.{$precision}f {$unit}", $value);
-    }
-
-    /**
      * Add to this filesize.
      *
      * @param string $sizeString Such as '100 MB'
@@ -119,6 +83,42 @@ class FileSize
         $this->bytes = (int) ceil($this->bytes * $n);
 
         return $this;
+    }
+
+    /**
+     * Get the filesize in a given unit.
+     *
+     * @param  string $newUnit Unit such as 'B', 'KB', etc
+     * @param  int    $precision Round to this many decimal places
+     * @return float|int
+     */
+    public function as($newUnit, $precision = 2)
+    {
+        return $this->convert($this->bytes, 'B', $newUnit, $precision);
+    }
+
+    /**
+     * Get the filesize in a human-friendly string.
+     *
+     * @param  int $precision Round to this many decimal places
+     * @return string
+     */
+    public function asAuto($precision = 2)
+    {
+        if (!is_int($precision)) {
+            throw new Exception('First argument must be an integer');
+        }
+
+        $factor = floor((strlen($this->bytes) - 1) / 3);
+        $value = $this->bytes / self::byteFactor($factor);
+        $units = array_keys(self::$unitMap);
+        $unit = $units[$factor];
+
+        if ($unit === 'B') {
+            return "{$value} B";
+        }
+
+        return sprintf("%.{$precision}f {$unit}", $value);
     }
 
     /**
