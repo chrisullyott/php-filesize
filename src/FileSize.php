@@ -75,7 +75,7 @@ class FileSize
     /**
      * Multiply the filesize by a number.
      *
-     * @param int $n An integer
+     * @param int|float $n A number
      * @return self
      */
     public function multiply($n)
