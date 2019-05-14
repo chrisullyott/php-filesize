@@ -55,7 +55,7 @@ $size->add('142.3M')
      ->multiply(0.5)
      ->divide(3);
 
-echo $size->asAuto(); // '512.57 GB'
+echo $size->asAuto(); // '170.86 GB'
 ```
 
 ### Details
