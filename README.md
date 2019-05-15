@@ -42,7 +42,7 @@ $size = new FileSize('1234522678.12 KB');
 echo $size->asAuto(); // '1.15 TB'
 ```
 
-### Add, subtract, multiply
+### Add, subtract, multiply, divide
 
 To make changes, use `add()`, `subtract()`, `multiply()`, and `divide()`. A variety of file size strings are supported here as well.
 
