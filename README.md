@@ -42,20 +42,19 @@ $size = new FileSize('1234522678.12 KB');
 echo $size->asAuto(); // '1.15 TB'
 ```
 
-### Add, subtract, multiply, divide
+### Modify the size
 
 To make changes, use `add()`, `subtract()`, `multiply()`, and `divide()`. A variety of file size strings are supported here as well.
 
 ```php
-$size = new FileSize('1 GB');
+$size = new FileSize('4 GB');
 
-$size->add('142.3M')
-     ->add('1 terabyte')
-     ->subtract('40.1 KiB')
-     ->multiply(0.5)
-     ->divide(3);
+$size->add('2G')
+     ->subtract('1 gigabytes')
+     ->multiply(4)
+     ->divide(2);
 
-echo $size->asAuto(); // '170.86 GB'
+echo $size->asAuto(); // 10.00 GB
 ```
 
 ### Details
