@@ -31,6 +31,15 @@ class FileSize
     ];
 
     /**
+     * A regex pattern for matching size strings, such as:
+     *
+     * - 10k
+     * - 123 MB
+     * - 1 gigabytes
+     */
+    const SIZE_STRING_PATTERN = '/^([0-9\.]+)\s*?([A-Za-z]+)$/';
+
+    /**
      * Constructor.
      *
      * @param string $sizeString Such as '100 MB'
@@ -176,18 +185,51 @@ class FileSize
     private function parseSizeString($sizeString)
     {
         $sizeString = trim($sizeString);
-        $sizeObject = new stdClass();
 
         if (is_numeric($sizeString)) {
-            $sizeObject->value = $sizeString;
-            $sizeObject->unit = 'B';
-        } else {
-            preg_match('/^.*?([0-9\.]+)\s*?([a-zA-Z]+).*$/', $sizeString, $matches);
-            $sizeObject->value = $matches[1];
-            $sizeObject->unit = $this->lookupUnit($matches[2]);
+            return $this->parseNumericString($sizeString);
         }
 
-        return $sizeObject;
+        return $this->parseNonNumericString($sizeString);
+    }
+
+    /**
+     * Parse a numeric size string (bytes) into its parts (value, 'B'). Numeric
+     * strings are expected to be a byte count, so decimal-point values would throw
+     * an Exception.
+     *
+     * @param  string $string Numeric such as '1000'
+     * @return object
+     */
+    private function parseNumericString($string)
+    {
+        $intVal = intval($string);
+        $floatVal = floatval($string);
+
+        if ($floatVal == $intVal) {
+            return (object) ['value' => $intVal, 'unit' => 'B'];
+        }
+
+        throw new Exception("Missing unit for float \"{$floatVal}\"");
+    }
+
+    /**
+     * Parse a size string into its parts (value, unit).
+     *
+     * @param string $string Such as '100 MB'
+     * @return object
+     */
+    private function parseNonNumericString($string)
+    {
+        preg_match(self::SIZE_STRING_PATTERN, $string, $matches);
+
+        if (count($matches) === 3) {
+            $value = floatval($matches[1]);
+            $unit = $this->lookupUnit($matches[2]);
+            return (object) ['value' => $value, 'unit' => $unit];
+        }
+
+        throw new Exception("Could not parse \"{$string}\"");
     }
 
     /**
