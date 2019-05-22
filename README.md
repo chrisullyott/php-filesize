@@ -54,7 +54,7 @@ $size->add('2G')
      ->multiply(4)
      ->divide(2);
 
-echo $size->asAuto(); // 10.00 GB
+echo $size->asAuto(); // '10.00 GB'
 ```
 
 ### Details
