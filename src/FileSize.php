@@ -89,7 +89,7 @@ class FileSize
      */
     public function multiply($n)
     {
-        $this->bytes = (int) ceil($this->bytes * $n);
+        $this->bytes = self::byteFormat($this->bytes * $n);
 
         return $this;
     }
@@ -244,6 +244,17 @@ class FileSize
     }
 
     /**
+     * Format a numeric string into a byte count (integer).
+     *
+     * @param  string $number A numeric string or float
+     * @return int
+     */
+    private static function byteFormat($number)
+    {
+        return (int) ceil($number);
+    }
+
+    /**
      * Change the filesize unit measurement using known units.
      *
      * @param  int    $size      The current size
@@ -262,7 +273,7 @@ class FileSize
 
         // For bytes, return a rounded integer.
         if ($toUnit === 'B') {
-            return (int) ceil($size);
+            return self::byteFormat($size);
         }
 
         return $precision ? round($size, $precision) : $size;
