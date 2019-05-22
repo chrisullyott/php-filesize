@@ -14,6 +14,13 @@ class FileSize
     private $bytes;
 
     /**
+     * A list of user filesize units previously mapped.
+     *
+     * @var array
+     */
+    private $unitCache = [];
+
+    /**
      * A mapping of filesize units to lowercase strings.
      *
      * @var array
@@ -151,10 +158,15 @@ class FileSize
      */
     private function lookupUnit($unitString)
     {
+        if (isset($this->unitCache[$unitString])) {
+            return $this->unitCache[$unitString];
+        }
+
         $lowerUnitString = strtolower($unitString);
 
         foreach (self::$unitMap as $key => $list) {
             if (in_array($lowerUnitString, $list)) {
+                $this->unitCache[$unitString] = $key;
                 return $key;
             }
         }
