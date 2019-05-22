@@ -80,6 +80,6 @@ class FileSizeTest extends PHPUnit_Framework_TestCase
         $size = new FileSize('1.2345 KB');
         $size->multiply(0.333);
 
-        $this->assertSame($size->asAuto(), '421 B');
+        $this->assertSame($size->asAuto(), '422 B');
     }
 }

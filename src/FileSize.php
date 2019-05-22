@@ -260,9 +260,9 @@ class FileSize
             $size = (float) $size * self::byteFactor($index1 - $index2);
         }
 
-        // Return an integer for bytes only.
+        // For bytes, return a rounded integer.
         if ($toUnit === 'B') {
-            return (int) $size;
+            return (int) ceil($size);
         }
 
         return $precision ? round($size, $precision) : $size;
