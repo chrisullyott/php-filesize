@@ -233,28 +233,6 @@ class FileSize
     }
 
     /**
-     * Get the number of bytes per factor. (2^10 = 1,024; 2^20 = 1,048,576...)
-     *
-     * @param  int $factor
-     * @return int
-     */
-    private static function byteFactor($factor)
-    {
-        return 2 ** (10 * $factor);
-    }
-
-    /**
-     * Format a numeric string into a byte count (integer).
-     *
-     * @param  string $number A numeric string or float
-     * @return int
-     */
-    private static function byteFormat($number)
-    {
-        return (int) ceil($number);
-    }
-
-    /**
      * Change the filesize unit measurement using known units.
      *
      * @param  int    $size      The current size
@@ -277,5 +255,27 @@ class FileSize
         }
 
         return $precision ? round($size, $precision) : $size;
+    }
+
+    /**
+     * Get the number of bytes per factor. (2^10 = 1,024; 2^20 = 1,048,576...)
+     *
+     * @param  int $factor
+     * @return int
+     */
+    private static function byteFactor($factor)
+    {
+        return 2 ** (10 * $factor);
+    }
+
+    /**
+     * Format a numeric string into a byte count (integer).
+     *
+     * @param  string $number A numeric string or float
+     * @return int
+     */
+    private static function byteFormat($number)
+    {
+        return (int) ceil($number);
     }
 }
