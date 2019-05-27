@@ -6,7 +6,9 @@
  * @author Chris Ullyott <chris@monkdevelopment.com>
  */
 
-class FileSizeTest extends PHPUnit_Framework_TestCase
+namespace FileSize;
+
+class FileSizeTest extends \PHPUnit_Framework_TestCase
 {
     public function testBytes()
     {

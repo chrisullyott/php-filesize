@@ -22,9 +22,9 @@
         "phpunit/phpunit": "^5"
     },
     "autoload": {
-        "classmap": [
-            "src/"
-        ]
+        "psr-4": {
+            "FileSize\\": "src"
+        }
     },
     "keywords": [
         "php",

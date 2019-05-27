@@ -4,6 +4,8 @@
  * A class for calculating file sizes and converting between units.
  */
 
+namespace FileSize;
+
 class FileSize
 {
     /**
