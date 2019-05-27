@@ -25,5 +25,9 @@
         "classmap": [
             "src/"
         ]
-    }
+    },
+    "keywords": [
+        "php",
+        "size-calculation"
+    ]
 }
