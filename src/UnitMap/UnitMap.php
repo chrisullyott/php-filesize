@@ -1,6 +1,6 @@
 <?php
 
-namespace ChrisUllyott\FileSize;
+namespace ChrisUllyott\FileSize\UnitMap;
 
 /**
  * A data structure for the unit map.

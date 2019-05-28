@@ -2,6 +2,10 @@
 
 namespace ChrisUllyott\FileSize;
 
+use ChrisUllyott\FileSize\UnitMap\UnitMap;
+use ChrisUllyott\FileSize\UnitMap\UnitMapper;
+use ChrisUllyott\FileSize\Parser\SizeStringParser;
+
 /**
  * Easily calculate file sizes and convert between units.
  */

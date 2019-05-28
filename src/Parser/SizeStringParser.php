@@ -1,6 +1,6 @@
 <?php
 
-namespace ChrisUllyott\FileSize;
+namespace ChrisUllyott\FileSize\Parser;
 
 /**
  * Parse a size string like '100 MB' into its parts (value, unit).
