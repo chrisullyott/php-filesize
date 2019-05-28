@@ -1,10 +1,11 @@
 <?php
 
-namespace ChrisUllyott\FileSize\UnitMap;
-
 /**
  * A data structure for the unit map.
  */
+
+namespace ChrisUllyott\FileSize\UnitMap;
+
 class UnitMap
 {
     /**

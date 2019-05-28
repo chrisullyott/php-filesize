@@ -1,10 +1,11 @@
 <?php
 
+/**
+ * Match arbitrary strings to unit map keys, such as 'Megabytes' => 'MB'.
+ */
+
 namespace ChrisUllyott\FileSize\UnitMap;
 
-/**
- * Matches arbitrary strings to unit map keys, such as 'Megabytes' => 'MB'.
- */
 class UnitMapper
 {
     /**
