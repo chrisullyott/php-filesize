@@ -23,32 +23,6 @@ class FileSize
     private $unitCache = [];
 
     /**
-     * A mapping of filesize units to lowercase strings.
-     *
-     * @var array
-     */
-    private static $unitMap = [
-        'B'  => ['b',              'byte',      'bytes'],
-        'KB' => ['k', 'kb', 'kib', 'kilobyte',  'kilobytes'],
-        'MB' => ['m', 'mb', 'mib', 'megabyte',  'megabytes'],
-        'GB' => ['g', 'gb', 'gib', 'gigabyte',  'gigabytes'],
-        'TB' => ['t', 'tb', 'tib', 'terabyte',  'terabytes'],
-        'PB' => ['p', 'pb', 'pib', 'petabyte',  'petabytes'],
-        'EB' => ['e', 'eb', 'eib', 'exabyte',   'exabytes'],
-        'ZB' => ['z', 'zb', 'zib', 'zettabyte', 'zettabytes'],
-        'YB' => ['y', 'yb', 'yib', 'yottabyte', 'yottabytes']
-    ];
-
-    /**
-     * A regex pattern for matching size strings, such as:
-     *
-     * - 10k
-     * - 123 MB
-     * - 1 gigabytes
-     */
-    const SIZE_STRING_PATTERN = '/^([0-9\.]+)\s*?([A-Za-z]+)$/';
-
-    /**
      * Constructor.
      *
      * @param string $sizeString Such as '100 MB'
@@ -123,7 +97,7 @@ class FileSize
      */
     public function as($unitString, $precision = 2)
     {
-        $toUnit = $this->lookupUnit($unitString);
+        $toUnit = UnitMap::lookup($unitString);
 
         return $this->convert($this->bytes, 'B', $toUnit, $precision);
     }
@@ -142,7 +116,7 @@ class FileSize
 
         $factor = floor((strlen($this->bytes) - 1) / 3);
         $value = $this->bytes / self::byteFactor($factor);
-        $units = array_keys(self::$unitMap);
+        $units = UnitMap::keys();
         $unit = $units[$factor];
 
         if ($unit === 'B') {
@@ -150,30 +124,6 @@ class FileSize
         }
 
         return sprintf("%.{$precision}f {$unit}", $value);
-    }
-
-    /**
-     * Get the standardized unit from a unit string, like 'GB' from 'gigabytes'.
-     *
-     * @param  string The unit string
-     * @return string
-     */
-    private function lookupUnit($unitString)
-    {
-        if (isset($this->unitCache[$unitString])) {
-            return $this->unitCache[$unitString];
-        }
-
-        $lowerUnitString = strtolower($unitString);
-
-        foreach (self::$unitMap as $key => $list) {
-            if (in_array($lowerUnitString, $list)) {
-                $this->unitCache[$unitString] = $key;
-                return $key;
-            }
-        }
-
-        throw new Exception("Unrecognized unit \"{$unitString}\"");
     }
 
     /**
@@ -185,65 +135,9 @@ class FileSize
      */
     private function stringToBytes($sizeString)
     {
-        $size = $this->parseSizeString($sizeString);
+        $size = SizeStringParser::parse($sizeString);
 
         return $this->convert($size->value, $size->unit, 'B');
-    }
-
-    /**
-     * Parse a size string into its parts (value, unit).
-     *
-     * @param string $sizeString Such as '100 MB'
-     * @return object
-     */
-    private function parseSizeString($sizeString)
-    {
-        $sizeString = trim($sizeString);
-
-        if (is_numeric($sizeString)) {
-            return $this->parseNumericString($sizeString);
-        }
-
-        return $this->parseNonNumericString($sizeString);
-    }
-
-    /**
-     * Parse a numeric size string (bytes) into its parts (value, 'B'). Numeric
-     * strings are expected to be a byte count, so decimal-point values would throw
-     * an Exception.
-     *
-     * @param  string $string Numeric such as '1000'
-     * @return object
-     */
-    private function parseNumericString($string)
-    {
-        $intVal = intval($string);
-        $floatVal = floatval($string);
-
-        if ($floatVal == $intVal) {
-            return (object) ['value' => $intVal, 'unit' => 'B'];
-        }
-
-        throw new Exception("Missing unit for float \"{$floatVal}\"");
-    }
-
-    /**
-     * Parse a size string into its parts (value, unit).
-     *
-     * @param string $string Such as '100 MB'
-     * @return object
-     */
-    private function parseNonNumericString($string)
-    {
-        preg_match(self::SIZE_STRING_PATTERN, $string, $matches);
-
-        if (count($matches) === 3) {
-            $value = floatval($matches[1]);
-            $unit = $this->lookupUnit($matches[2]);
-            return (object) ['value' => $value, 'unit' => $unit];
-        }
-
-        throw new Exception("Could not parse \"{$string}\"");
     }
 
     /**
@@ -258,8 +152,8 @@ class FileSize
     private function convert($size, $fromUnit, $toUnit, $precision = null)
     {
         if ($fromUnit !== $toUnit) {
-            $index1 = array_search($fromUnit, array_keys(self::$unitMap));
-            $index2 = array_search($toUnit, array_keys(self::$unitMap));
+            $index1 = array_search($fromUnit, UnitMap::keys());
+            $index2 = array_search($toUnit, UnitMap::keys());
             $size = (float) $size * self::byteFactor($index1 - $index2);
         }
 
