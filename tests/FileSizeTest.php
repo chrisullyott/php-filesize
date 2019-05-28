@@ -6,7 +6,7 @@
  * @author Chris Ullyott <chris@monkdevelopment.com>
  */
 
-namespace ChrisUllyott\FileSize;
+use ChrisUllyott\FileSize;
 
 class FileSizeTest extends \PHPUnit_Framework_TestCase
 {

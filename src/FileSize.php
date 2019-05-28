@@ -4,7 +4,7 @@
  * Easily calculate file sizes and convert between units.
  */
 
-namespace ChrisUllyott\FileSize;
+namespace ChrisUllyott;
 
 use ChrisUllyott\FileSize\UnitMap\UnitMap;
 use ChrisUllyott\FileSize\UnitMap\UnitMapper;

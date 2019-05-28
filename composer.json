@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ChrisUllyott\\FileSize\\": "src/"
+            "ChrisUllyott\\": "src/"
         }
     },
     "keywords": [
