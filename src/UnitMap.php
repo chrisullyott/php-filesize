@@ -2,6 +2,9 @@
 
 namespace ChrisUllyott\FileSize;
 
+/**
+ * A data structure for the unit map.
+ */
 class UnitMap
 {
     /**

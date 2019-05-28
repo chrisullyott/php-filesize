@@ -2,6 +2,9 @@
 
 namespace ChrisUllyott\FileSize;
 
+/**
+ * Matches arbitrary strings to unit map keys, such as 'Megabytes' => 'MB'.
+ */
 class UnitMapper
 {
     /**
@@ -12,9 +15,9 @@ class UnitMapper
     private $mappedStrings = [];
 
     /**
-     * Map an arbitrary unit string to a key.
+     * Map an arbitrary unit string to a unit map key.
      *
-     * @param  string $unitString Such as 'Terabyte'
+     * @param  string $unitString Such as 'Megabytes'
      * @return string
      */
     public function keyFromString($unitString)
@@ -40,7 +43,7 @@ class UnitMapper
     }
 
     /**
-     * Lookup a map index number from a key.
+     * Look up a map index number from a key.
      *
      * @param  string $key Such as 'MB'
      * @return int
@@ -51,7 +54,7 @@ class UnitMapper
     }
 
     /**
-     * Lookup a map key from an index number.
+     * Look up a map key from an index number.
      *
      * @param  int $index An integer
      * @return string

@@ -1,11 +1,10 @@
 <?php
 
-/**
- * A class for calculating file sizes and converting between units.
- */
-
 namespace ChrisUllyott\FileSize;
 
+/**
+ * Easily calculate file sizes and convert between units.
+ */
 class FileSize
 {
     /**
@@ -140,7 +139,7 @@ class FileSize
     }
 
     /**
-     * Change the filesize unit measurement using known units.
+     * Change the filesize unit measurement using arbitrary units.
      *
      * @param  int    $size      The current size
      * @param  string $fromUnit  The current unit
@@ -159,7 +158,6 @@ class FileSize
             $size = (float) $size * self::byteFactor($index1 - $index2);
         }
 
-        // For bytes, return a rounded integer.
         if ($toUnit === UnitMap::BYTE) {
             return self::byteFormat($size);
         }

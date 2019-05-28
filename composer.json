@@ -1,7 +1,7 @@
 {
     "name": "chrisullyott/php-filesize",
     "type": "library",
-    "description": "A class for calculating file sizes and converting between units.",
+    "description": "Easily calculate file sizes and convert between units.",
     "homepage": "https://github.com/chrisullyott/php-filesize",
     "license": "MIT",
     "authors": [

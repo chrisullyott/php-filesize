@@ -2,6 +2,9 @@
 
 namespace ChrisUllyott\FileSize;
 
+/**
+ * Parse a size string like '100 MB' into its parts (value, unit).
+ */
 class SizeStringParser
 {
     /**
