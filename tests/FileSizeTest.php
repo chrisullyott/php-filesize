@@ -65,7 +65,7 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
 
     public function testNoConvert()
     {
-        $size = new FileSize('525 Gigabytes');
+        $size = new FileSize('525 Gibibytes');
 
         $this->assertSame($size->as('GB'), 525.0);
     }

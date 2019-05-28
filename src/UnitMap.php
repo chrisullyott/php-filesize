@@ -15,14 +15,14 @@ class UnitMap
      * @var array
      */
     public static $map = [
-        'B'  => ['b',              'byte',      'bytes'],
-        'KB' => ['k', 'kb', 'kib', 'kilobyte',  'kilobytes'],
-        'MB' => ['m', 'mb', 'mib', 'megabyte',  'megabytes'],
-        'GB' => ['g', 'gb', 'gib', 'gigabyte',  'gigabytes'],
-        'TB' => ['t', 'tb', 'tib', 'terabyte',  'terabytes'],
-        'PB' => ['p', 'pb', 'pib', 'petabyte',  'petabytes'],
-        'EB' => ['e', 'eb', 'eib', 'exabyte',   'exabytes'],
-        'ZB' => ['z', 'zb', 'zib', 'zettabyte', 'zettabytes'],
-        'YB' => ['y', 'yb', 'yib', 'yottabyte', 'yottabytes']
+        'B'  => ['b', 'byte'],
+        'KB' => ['k', 'kb', 'kib', 'kilobyte',  'kibibyte'],
+        'MB' => ['m', 'mb', 'mib', 'megabyte',  'mebibyte'],
+        'GB' => ['g', 'gb', 'gib', 'gigabyte',  'gibibyte'],
+        'TB' => ['t', 'tb', 'tib', 'terabyte',  'tebibyte'],
+        'PB' => ['p', 'pb', 'pib', 'petabyte',  'pebibyte'],
+        'EB' => ['e', 'eb', 'eib', 'exabyte',   'exbibyte'],
+        'ZB' => ['z', 'zb', 'zib', 'zettabyte', 'zebibyte'],
+        'YB' => ['y', 'yb', 'yib', 'yottabyte', 'yobibyte']
     ];
 }
