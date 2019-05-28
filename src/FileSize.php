@@ -116,8 +116,7 @@ class FileSize
 
         $factor = floor((strlen($this->bytes) - 1) / 3);
         $value = $this->bytes / self::byteFactor($factor);
-        $units = array_keys(UnitMap::$map);
-        $unit = $units[$factor];
+        $unit = $this->unitMapper->keyFromIndex($factor);
 
         if ($unit === 'B') {
             return "{$value} B";
@@ -151,12 +150,12 @@ class FileSize
      */
     private function convert($size, $fromUnit, $toUnit, $precision = null)
     {
-        $fromUnit = $this->unitMapper->lookup($fromUnit);
-        $toUnit = $this->unitMapper->lookup($toUnit);
+        $fromUnit = $this->unitMapper->keyFromString($fromUnit);
+        $toUnit = $this->unitMapper->keyFromString($toUnit);
 
         if ($fromUnit !== $toUnit) {
-            $index1 = array_search($fromUnit, array_keys(UnitMap::$map));
-            $index2 = array_search($toUnit, array_keys(UnitMap::$map));
+            $index1 = $this->unitMapper->indexFromKey($fromUnit);
+            $index2 = $this->unitMapper->indexFromKey($toUnit);
             $size = (float) $size * self::byteFactor($index1 - $index2);
         }
 

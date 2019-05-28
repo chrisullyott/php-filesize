@@ -17,7 +17,7 @@ class UnitMapper
      * @param  string $unitString Such as 'Terabyte'
      * @return string
      */
-    public function lookup($unitString)
+    public function keyFromString($unitString)
     {
         if (isset($this->cache[$unitString])) {
             return $this->cache[$unitString];
@@ -33,6 +33,30 @@ class UnitMapper
         }
 
         throw new Exception("Unrecognized unit \"{$unitString}\"");
+    }
+
+    /**
+     * Lookup a map index number from a key.
+     *
+     * @param  string $key Such as 'MB'
+     * @return int
+     */
+    public function indexFromKey($key)
+    {
+        return array_search($key, array_keys(UnitMap::$map));
+    }
+
+    /**
+     * Lookup a map key from an index number.
+     *
+     * @param  int $index An integer
+     * @return string
+     */
+    public function keyFromIndex($index)
+    {
+        $keys = array_keys(UnitMap::$map);
+
+        return $keys[$index];
     }
 
     /**
