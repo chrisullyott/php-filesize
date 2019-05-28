@@ -9,7 +9,7 @@ class UnitMapper
      *
      * @var array
      */
-    private $cache = [];
+    private $mappedStrings = [];
 
     /**
      * Map an arbitrary unit string to a key.
@@ -19,15 +19,15 @@ class UnitMapper
      */
     public function keyFromString($unitString)
     {
-        if (isset($this->cache[$unitString])) {
-            return $this->cache[$unitString];
+        if (isset($this->mappedStrings[$unitString])) {
+            return $this->mappedStrings[$unitString];
         }
 
         $sanitizedString = self::sanitizeUnitString($unitString);
 
         foreach (UnitMap::$map as $key => $list) {
             if (in_array($sanitizedString, $list)) {
-                $this->cache[$unitString] = $key;
+                $this->mappedStrings[$unitString] = $key;
                 return $key;
             }
         }
