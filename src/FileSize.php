@@ -6,6 +6,7 @@
 
 namespace ChrisUllyott;
 
+use ChrisUllyott\FileSize\Math\Math;
 use ChrisUllyott\FileSize\UnitMap\UnitMap;
 use ChrisUllyott\FileSize\UnitMap\UnitMapper;
 use ChrisUllyott\FileSize\Parser\SizeStringParser;
@@ -93,7 +94,7 @@ class FileSize
      */
     public function multiply($n)
     {
-        $this->bytes = self::byteFormat($this->bytes * $n);
+        $this->bytes = Math::byteFormat($this->bytes * $n);
 
         return $this;
     }
@@ -133,8 +134,8 @@ class FileSize
             throw new FileSizeException('First argument must be an integer');
         }
 
-        $factor = floor((strlen($this->bytes) - 1) / 3);
-        $value = $this->bytes / self::byteFactor($factor);
+        $factor = Math::factorByBytes($this->bytes);
+        $value = $this->bytes / Math::bytesByFactor($factor);
         $unit = $this->unitMapper->keyFromIndex($factor);
 
         if ($unit === UnitMap::BYTE) {
@@ -161,35 +162,13 @@ class FileSize
         if ($fromUnit !== $toUnit) {
             $index1 = $this->unitMapper->indexFromKey($fromUnit);
             $index2 = $this->unitMapper->indexFromKey($toUnit);
-            $size = (float) $size * self::byteFactor($index1 - $index2);
+            $size = (float) $size * Math::bytesByFactor($index1 - $index2);
         }
 
         if ($toUnit === UnitMap::BYTE) {
-            return self::byteFormat($size);
+            return Math::byteFormat($size);
         }
 
         return $precision ? round($size, $precision) : $size;
-    }
-
-    /**
-     * Get the number of bytes per factor. (2^10 = 1,024; 2^20 = 1,048,576...)
-     *
-     * @param  int $factor
-     * @return int
-     */
-    private static function byteFactor($factor)
-    {
-        return 2 ** (10 * $factor);
-    }
-
-    /**
-     * Format a numeric string into a byte count (integer).
-     *
-     * @param  string $number A numeric string or float
-     * @return int
-     */
-    private static function byteFormat($number)
-    {
-        return (int) ceil($number);
     }
 }

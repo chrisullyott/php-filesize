@@ -10,11 +10,18 @@ use ChrisUllyott\FileSize;
 
 class FileSizeTest extends \PHPUnit_Framework_TestCase
 {
-    public function testBytes()
+    public function testBytes1()
     {
         $size = new FileSize('128974848');
 
         $this->assertSame($size->as('B'), 128974848);
+    }
+
+    public function testBytes2()
+    {
+        $size = new FileSize('99.7 bytes');
+
+        $this->assertSame($size->as('B'), 100);
     }
 
     public function testAdd()
