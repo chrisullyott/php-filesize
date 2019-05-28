@@ -19,6 +19,10 @@ class UnitMapper
      */
     public function keyFromString($unitString)
     {
+        if ($unitString === UnitMap::BYTE) {
+            return UnitMap::BYTE;
+        }
+
         if (isset($this->mappedStrings[$unitString])) {
             return $this->mappedStrings[$unitString];
         }
