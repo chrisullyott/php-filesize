@@ -39,6 +39,20 @@ class FileSize
     }
 
     /**
+     * Get the byte count from an arbitrary size string. Numeric entries will be
+     * considered a count of bytes.
+     *
+     * @param string $sizeString Such as '100 MB'
+     * @return int
+     */
+    private function stringToBytes($sizeString)
+    {
+        $size = SizeStringParser::parse($sizeString);
+
+        return $this->convert($size->value, $size->unit, UnitMap::BYTE);
+    }
+
+    /**
      * Add to this filesize.
      *
      * @param string $sizeString Such as '100 MB'
@@ -127,20 +141,6 @@ class FileSize
         }
 
         return sprintf("%.{$precision}f {$unit}", $value);
-    }
-
-    /**
-     * Get the byte count from an arbitrary size string. Numeric entries will be
-     * considered a count of bytes.
-     *
-     * @param string $sizeString Such as '100 MB'
-     * @return int
-     */
-    private function stringToBytes($sizeString)
-    {
-        $size = SizeStringParser::parse($sizeString);
-
-        return $this->convert($size->value, $size->unit, UnitMap::BYTE);
     }
 
     /**
