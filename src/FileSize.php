@@ -99,7 +99,7 @@ class FileSize
      */
     public function as($unitString, $precision = 2)
     {
-        return $this->convert($this->bytes, 'B', $unitString, $precision);
+        return $this->convert($this->bytes, UnitMap::BYTE, $unitString, $precision);
     }
 
     /**
@@ -118,8 +118,8 @@ class FileSize
         $value = $this->bytes / self::byteFactor($factor);
         $unit = $this->unitMapper->keyFromIndex($factor);
 
-        if ($unit === 'B') {
-            return "{$value} B";
+        if ($unit === UnitMap::BYTE) {
+            return $value . ' ' . UnitMap::BYTE;
         }
 
         return sprintf("%.{$precision}f {$unit}", $value);
@@ -136,7 +136,7 @@ class FileSize
     {
         $size = SizeStringParser::parse($sizeString);
 
-        return $this->convert($size->value, $size->unit, 'B');
+        return $this->convert($size->value, $size->unit, UnitMap::BYTE);
     }
 
     /**
@@ -160,7 +160,7 @@ class FileSize
         }
 
         // For bytes, return a rounded integer.
-        if ($toUnit === 'B') {
+        if ($toUnit === UnitMap::BYTE) {
             return self::byteFormat($size);
         }
 

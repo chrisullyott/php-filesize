@@ -5,6 +5,11 @@ namespace ChrisUllyott\FileSize;
 class UnitMap
 {
     /**
+     * The key used for bytes, the base unit.
+     */
+    const BYTE = 'B';
+
+    /**
      * A mapping of filesize units to lowercase strings.
      *
      * @var array
