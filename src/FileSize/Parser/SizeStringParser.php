@@ -6,6 +6,8 @@
 
 namespace ChrisUllyott\FileSize\Parser;
 
+use ChrisUllyott\FileSize\Exception\FileSizeException;
+
 class SizeStringParser
 {
     /**
@@ -51,7 +53,7 @@ class SizeStringParser
             return (object) ['value' => $intVal, 'unit' => 'B'];
         }
 
-        throw new Exception("Missing unit for float \"{$floatVal}\"");
+        throw new FileSizeException("Missing unit for float \"{$floatVal}\"");
     }
 
     /**
@@ -70,6 +72,6 @@ class SizeStringParser
             return (object) ['value' => $floatVal, 'unit' => $unit];
         }
 
-        throw new Exception("Could not parse \"{$string}\"");
+        throw new FileSizeException("Could not parse \"{$string}\"");
     }
 }

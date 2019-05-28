@@ -6,6 +6,8 @@
 
 namespace ChrisUllyott\FileSize\UnitMap;
 
+use ChrisUllyott\FileSize\Exception\FileSizeException;
+
 class UnitMapper
 {
     /**
@@ -40,7 +42,7 @@ class UnitMapper
             }
         }
 
-        throw new Exception("Unrecognized unit \"{$unitString}\"");
+        throw new FileSizeException("Unrecognized unit \"{$unitString}\"");
     }
 
     /**

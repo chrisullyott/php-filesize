@@ -9,6 +9,7 @@ namespace ChrisUllyott;
 use ChrisUllyott\FileSize\UnitMap\UnitMap;
 use ChrisUllyott\FileSize\UnitMap\UnitMapper;
 use ChrisUllyott\FileSize\Parser\SizeStringParser;
+use ChrisUllyott\FileSize\Exception\FileSizeException;
 
 class FileSize
 {
@@ -129,7 +130,7 @@ class FileSize
     public function asAuto($precision = 2)
     {
         if (!is_int($precision)) {
-            throw new Exception('First argument must be an integer');
+            throw new FileSizeException('First argument must be an integer');
         }
 
         $factor = floor((strlen($this->bytes) - 1) / 3);
