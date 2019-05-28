@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Parser
- */
-
 namespace ChrisUllyott\FileSize;
 
 class SizeStringParser
@@ -65,9 +61,9 @@ class SizeStringParser
         preg_match(self::SIZE_STRING_PATTERN, $string, $matches);
 
         if (count($matches) === 3) {
-            $value = floatval($matches[1]);
-            $unit = UnitMap::lookup($matches[2]);
-            return (object) ['value' => $value, 'unit' => $unit];
+            $floatVal = floatval($matches[1]);
+            $unit = $matches[2];
+            return (object) ['value' => $floatVal, 'unit' => $unit];
         }
 
         throw new Exception("Could not parse \"{$string}\"");

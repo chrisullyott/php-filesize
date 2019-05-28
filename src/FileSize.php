@@ -16,11 +16,11 @@ class FileSize
     private $bytes;
 
     /**
-     * A list of user filesize units previously mapped.
+     * A UnitMapper object.
      *
-     * @var array
+     * @var UnitMapper
      */
-    private $unitCache = [];
+    private $unitMapper;
 
     /**
      * Constructor.
@@ -29,6 +29,8 @@ class FileSize
      */
     public function __construct($sizeString = null)
     {
+        $this->unitMapper = new UnitMapper();
+
         $this->bytes = $sizeString ? $this->stringToBytes($sizeString) : 0;
     }
 
@@ -97,9 +99,7 @@ class FileSize
      */
     public function as($unitString, $precision = 2)
     {
-        $toUnit = UnitMap::lookup($unitString);
-
-        return $this->convert($this->bytes, 'B', $toUnit, $precision);
+        return $this->convert($this->bytes, 'B', $unitString, $precision);
     }
 
     /**
@@ -116,7 +116,7 @@ class FileSize
 
         $factor = floor((strlen($this->bytes) - 1) / 3);
         $value = $this->bytes / self::byteFactor($factor);
-        $units = UnitMap::keys();
+        $units = array_keys(UnitMap::$map);
         $unit = $units[$factor];
 
         if ($unit === 'B') {
@@ -151,9 +151,12 @@ class FileSize
      */
     private function convert($size, $fromUnit, $toUnit, $precision = null)
     {
+        $fromUnit = $this->unitMapper->lookup($fromUnit);
+        $toUnit = $this->unitMapper->lookup($toUnit);
+
         if ($fromUnit !== $toUnit) {
-            $index1 = array_search($fromUnit, UnitMap::keys());
-            $index2 = array_search($toUnit, UnitMap::keys());
+            $index1 = array_search($fromUnit, array_keys(UnitMap::$map));
+            $index2 = array_search($toUnit, array_keys(UnitMap::$map));
             $size = (float) $size * self::byteFactor($index1 - $index2);
         }
 
