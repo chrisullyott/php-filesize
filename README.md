@@ -3,7 +3,7 @@
 
 # php-filesize
 
-A simple, flexible class for calculating binary file sizes and converting between units.
+A flexible library for calculating binary file sizes and converting between units.
 
 ### Installation
 
@@ -18,6 +18,8 @@ $ composer require chrisullyott/php-filesize
 A `FileSize` object, both on creation and within its methods, understands just about any expression of data size in bytes. You may instantiate it with a size, or leave it initially empty.
 
 ```php
+use ChrisUllyott\FileSize;
+
 $size = new FileSize('500 GB');
 ```
 
