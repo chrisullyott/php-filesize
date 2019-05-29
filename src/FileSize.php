@@ -10,7 +10,6 @@ use ChrisUllyott\FileSize\Math\Math;
 use ChrisUllyott\FileSize\UnitMap\UnitMap;
 use ChrisUllyott\FileSize\UnitMap\UnitMapper;
 use ChrisUllyott\FileSize\Parser\SizeStringParser;
-use ChrisUllyott\FileSize\Exception\FileSizeException;
 
 class FileSize
 {
