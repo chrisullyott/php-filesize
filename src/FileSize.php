@@ -50,7 +50,7 @@ class FileSize
         $object = SizeStringParser::parse($size);
 
         $value = floatval($object->value);
-        $unit = !is_null($object->unit) ? $object->unit : UnitMap::BYTE;
+        $unit = $object->unit ? $object->unit : UnitMap::BYTE;
 
         return $this->convert($value, $unit, UnitMap::BYTE);
     }
