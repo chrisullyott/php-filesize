@@ -119,7 +119,7 @@ class FileSize
      * @param  int    $precision Round to this many decimal places
      * @return float|int
      */
-    public function as($unitString, $precision = null)
+    public function as($unitString, $precision = 2)
     {
         return $this->convert($this->bytes, UnitMap::BYTE, $unitString, $precision);
     }
@@ -156,19 +156,15 @@ class FileSize
     {
         $fromUnit = $this->unitMapper->keyFromString($fromUnit);
         $toUnit = $this->unitMapper->keyFromString($toUnit);
-        $index1 = $this->unitMapper->indexFromKey($fromUnit);
-        $index2 = $this->unitMapper->indexFromKey($toUnit);
 
         if ($fromUnit !== $toUnit) {
+            $index1 = $this->unitMapper->indexFromKey($fromUnit);
+            $index2 = $this->unitMapper->indexFromKey($toUnit);
             $size = (float) $size * Math::bytesByFactor($index1 - $index2);
         }
 
         if ($toUnit === UnitMap::BYTE) {
             return self::formatBytes($size);
-        }
-
-        if (is_null($precision)) {
-            $precision = $index2;
         }
 
         return self::formatNumber($size, $precision);
@@ -188,14 +184,14 @@ class FileSize
     /**
      * Format a number for output.
      *
-     * @param  float  $value     The number value
-     * @param  int    $precision Round to this many decimal places
-     * @param  string $unit      A unit string to append
+     * @param  float|int  $value     The number value
+     * @param  int        $precision Round to this many decimal places
+     * @param  string     $unit      A unit string to append
      * @return float|string
      */
     private static function formatNumber($value, $precision = null, $unit = null)
     {
-        $value = $precision ? round($value, $precision) : $value;
+        $value = !is_null($precision) ? round($value, $precision) : $value;
 
         return $unit ? "{$value} {$unit}" : $value;
     }

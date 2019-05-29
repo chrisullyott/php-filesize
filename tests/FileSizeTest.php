@@ -45,7 +45,7 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
         $size = new FileSize('425.51 m');
         $size->multiply(9.125);
 
-        $this->assertSame($size->as('GB'), 3.792);
+        $this->assertSame($size->as('GB'), 3.79);
     }
 
     public function testDivide()
