@@ -119,7 +119,7 @@ class FileSize
      * @param  int    $precision Round to this many decimal places
      * @return float|int
      */
-    public function as($unitString, $precision = 2)
+    public function as($unitString, $precision = null)
     {
         return $this->convert($this->bytes, UnitMap::BYTE, $unitString, $precision);
     }
@@ -132,19 +132,15 @@ class FileSize
      */
     public function asAuto($precision = 2)
     {
-        if (!is_int($precision)) {
-            throw new FileSizeException('First argument must be an integer');
-        }
-
         $factor = Math::factorByBytes($this->bytes);
-        $value = $this->bytes / Math::bytesByFactor($factor);
+        $size = $this->bytes / Math::bytesByFactor($factor);
         $unit = $this->unitMapper->keyFromIndex($factor);
 
         if ($unit === UnitMap::BYTE) {
-            return $value . ' ' . UnitMap::BYTE;
+            return $size . ' ' . UnitMap::BYTE;
         }
 
-        return sprintf("%.{$precision}f {$unit}", $value);
+        return self::formatNumber($size, $precision, $unit);
     }
 
     /**
@@ -160,10 +156,10 @@ class FileSize
     {
         $fromUnit = $this->unitMapper->keyFromString($fromUnit);
         $toUnit = $this->unitMapper->keyFromString($toUnit);
+        $index1 = $this->unitMapper->indexFromKey($fromUnit);
+        $index2 = $this->unitMapper->indexFromKey($toUnit);
 
         if ($fromUnit !== $toUnit) {
-            $index1 = $this->unitMapper->indexFromKey($fromUnit);
-            $index2 = $this->unitMapper->indexFromKey($toUnit);
             $size = (float) $size * Math::bytesByFactor($index1 - $index2);
         }
 
@@ -171,6 +167,25 @@ class FileSize
             return Math::byteFormat($size);
         }
 
-        return $precision ? round($size, $precision) : $size;
+        if (is_null($precision)) {
+            $precision = $index2;
+        }
+
+        return self::formatNumber($size, $precision);
+    }
+
+    /**
+     * Format a number for output.
+     *
+     * @param  float  $value     The number value
+     * @param  int    $precision Round to this many decimal places
+     * @param  string $unit      A unit string to append
+     * @return float|string
+     */
+    public static function formatNumber($value, $precision = null, $unit = null)
+    {
+        $value = $precision ? round($value, $precision) : $value;
+
+        return $unit ? "{$value} {$unit}" : $value;
     }
 }
