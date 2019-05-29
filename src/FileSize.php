@@ -135,10 +135,6 @@ class FileSize
         $size = $this->bytes / Math::bytesByFactor($factor);
         $unit = $this->unitMapper->keyFromIndex($factor);
 
-        if ($unit === UnitMap::BYTE) {
-            return $size . ' ' . UnitMap::BYTE;
-        }
-
         return self::formatNumber($size, $precision, $unit);
     }
 
