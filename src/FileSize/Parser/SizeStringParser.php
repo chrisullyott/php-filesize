@@ -13,65 +13,30 @@ class SizeStringParser
     /**
      * A regex pattern for matching size strings, such as:
      *
+     * - 150
      * - 10k
      * - 123 MB
      * - 1 gigabytes
      */
-    const SIZE_STRING_PATTERN = '/^([0-9\.]+)\s*?([A-Za-z]+)$/';
+    const SIZE_STRING_PATTERN = '/^([0-9\.]+)\s*?([A-Za-z]+)?$/';
 
     /**
      * Parse a size string into its parts (value, unit).
      *
-     * @param string $sizeString Such as '100 MB'
+     * @param string|int $size Such as '100 MB'
      * @return object
      */
-    public static function parse($sizeString)
+    public static function parse($size)
     {
-        $sizeString = trim($sizeString);
+        preg_match(self::SIZE_STRING_PATTERN, $size, $matches);
 
-        if (is_numeric($sizeString)) {
-            return self::parseNumericString($sizeString);
+        if (!isset($matches[1]) || !is_numeric($matches[1])) {
+            throw new FileSizeException("Could not parse \"{$size}\"");
         }
 
-        return self::parseNonNumericString($sizeString);
-    }
+        $value = $matches[1];
+        $unit = isset($matches[2]) ? $matches[2] : null;
 
-    /**
-     * Parse a numeric size string (bytes) into its parts (value, 'B'). Numeric
-     * strings are expected to be a byte count, so decimal-point values would throw
-     * an Exception.
-     *
-     * @param  string $string Numeric such as '1000'
-     * @return object
-     */
-    private static function parseNumericString($string)
-    {
-        $intVal = intval($string);
-        $floatVal = floatval($string);
-
-        if ($floatVal == $intVal) {
-            return (object) ['value' => $intVal, 'unit' => 'B'];
-        }
-
-        throw new FileSizeException("Missing unit for float \"{$floatVal}\"");
-    }
-
-    /**
-     * Parse a size string into its parts (value, unit).
-     *
-     * @param string $string Such as '100 MB'
-     * @return object
-     */
-    private static function parseNonNumericString($string)
-    {
-        preg_match(self::SIZE_STRING_PATTERN, $string, $matches);
-
-        if (count($matches) === 3) {
-            $floatVal = floatval($matches[1]);
-            $unit = $matches[2];
-            return (object) ['value' => $floatVal, 'unit' => $unit];
-        }
-
-        throw new FileSizeException("Could not parse \"{$string}\"");
+        return (object) ['value' => $value, 'unit' => $unit];
     }
 }

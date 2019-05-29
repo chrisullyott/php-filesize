@@ -31,38 +31,40 @@ class FileSize
     /**
      * Constructor.
      *
-     * @param string $sizeString Such as '100 MB'
+     * @param string|int $size Such as '100 MB'
      */
-    public function __construct($sizeString = null)
+    public function __construct($size = null)
     {
         $this->unitMapper = new UnitMapper();
 
-        $this->bytes = $sizeString ? $this->stringToBytes($sizeString) : 0;
+        $this->bytes = $size ? $this->sizeToBytes($size) : 0;
     }
 
     /**
-     * Get the byte count from an arbitrary size string. Numeric entries will be
-     * considered a count of bytes.
+     * Get the byte count from an arbitrary size string.
      *
-     * @param string $sizeString Such as '100 MB'
+     * @param string|int $size Such as '100 MB'
      * @return int
      */
-    private function stringToBytes($sizeString)
+    private function sizeToBytes($size)
     {
-        $size = SizeStringParser::parse($sizeString);
+        $object = SizeStringParser::parse($size);
 
-        return $this->convert($size->value, $size->unit, UnitMap::BYTE);
+        $value = floatval($object->value);
+        $unit = !is_null($object->unit) ? $object->unit : UnitMap::BYTE;
+
+        return $this->convert($value, $unit, UnitMap::BYTE);
     }
 
     /**
      * Add to this filesize.
      *
-     * @param string $sizeString Such as '100 MB'
+     * @param string|int $size Such as '100 MB'
      * @return self
      */
-    public function add($sizeString)
+    public function add($size)
     {
-        $this->bytes += $this->stringToBytes($sizeString);
+        $this->bytes += $this->sizeToBytes($size);
 
         return $this;
     }
@@ -70,12 +72,12 @@ class FileSize
     /**
      * Subtract from this filesize, stopping at 0 bytes.
      *
-     * @param string $sizeString Such as '100 MB'
+     * @param string|int $size Such as '100 MB'
      * @return self
      */
-    public function subtract($sizeString)
+    public function subtract($size)
     {
-        $bytesToSubtract = $this->stringToBytes($sizeString);
+        $bytesToSubtract = $this->sizeToBytes($size);
 
         if ($bytesToSubtract < $this->bytes) {
             $this->bytes -= $bytesToSubtract;
