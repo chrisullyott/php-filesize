@@ -42,10 +42,10 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
 
     public function testMultiply()
     {
-        $size = new FileSize('100 m');
-        $size->multiply(7.5);
+        $size = new FileSize('425.51 m');
+        $size->multiply(9.125);
 
-        $this->assertSame($size->as('GB', 2), 0.73);
+        $this->assertSame($size->as('GB'), 3.792);
     }
 
     public function testDivide()
@@ -53,7 +53,7 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
         $size = new FileSize('300K');
         $size->divide(2);
 
-        $this->assertSame($size->as('KB'), 150.0);
+        $this->assertSame($size->as('KB'), (float) 150);
     }
 
     public function testConvertUp()
@@ -74,7 +74,7 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
     {
         $size = new FileSize('525 Gibibytes');
 
-        $this->assertSame($size->as('GB'), 525.0);
+        $this->assertSame($size->as('GB'), (float) 525);
     }
 
     public function testAuto1()
@@ -89,6 +89,13 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
         $size = new FileSize('1.2345 KB');
         $size->multiply(0.333);
 
-        $this->assertSame($size->asAuto(), '422 B');
+        $this->assertSame($size->asAuto(2), '422 B');
+    }
+
+    public function testAuto3()
+    {
+        $size = new FileSize('158.1983 mb');
+
+        $this->assertSame($size->asAuto(), '158.2 MB');
     }
 }
