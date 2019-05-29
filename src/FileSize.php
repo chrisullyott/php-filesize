@@ -93,7 +93,7 @@ class FileSize
      * @param int|float $n A number
      * @return self
      */
-    public function multiply($n)
+    public function multiplyBy($n)
     {
         $this->bytes = self::formatBytes($this->bytes * $n);
 
@@ -106,9 +106,9 @@ class FileSize
      * @param  int|float $n A number
      * @return self
      */
-    public function divide($n)
+    public function divideBy($n)
     {
-        return $this->multiply(1 / $n);
+        return $this->multiplyBy(1 / $n);
     }
 
     /**
