@@ -96,7 +96,7 @@ class FileSize
      */
     public function multiply($n)
     {
-        $this->bytes = Math::byteFormat($this->bytes * $n);
+        $this->bytes = self::formatBytes($this->bytes * $n);
 
         return $this;
     }
@@ -164,7 +164,7 @@ class FileSize
         }
 
         if ($toUnit === UnitMap::BYTE) {
-            return Math::byteFormat($size);
+            return self::formatBytes($size);
         }
 
         if (is_null($precision)) {
@@ -175,6 +175,17 @@ class FileSize
     }
 
     /**
+     * Format a numeric string into a byte count (integer).
+     *
+     * @param  string $number A numeric string or float
+     * @return int
+     */
+    private static function formatBytes($number)
+    {
+        return (int) ceil($number);
+    }
+
+    /**
      * Format a number for output.
      *
      * @param  float  $value     The number value
@@ -182,7 +193,7 @@ class FileSize
      * @param  string $unit      A unit string to append
      * @return float|string
      */
-    public static function formatNumber($value, $precision = null, $unit = null)
+    private static function formatNumber($value, $precision = null, $unit = null)
     {
         $value = $precision ? round($value, $precision) : $value;
 

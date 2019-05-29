@@ -29,15 +29,4 @@ class Math
     {
         return floor((strlen($bytes) - 1) / 3);
     }
-
-    /**
-     * Format a numeric string into a byte count (integer).
-     *
-     * @param  string $number A numeric string or float
-     * @return int
-     */
-    public static function byteFormat($number)
-    {
-        return (int) ceil($number);
-    }
 }
