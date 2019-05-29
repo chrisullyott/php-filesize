@@ -78,7 +78,7 @@ class FileSize
     {
         $bytesToSubtract = $this->sizeToBytes($size);
 
-        if ($bytesToSubtract < $this->bytes) {
+        if ($bytesToSubtract <= $this->bytes) {
             $this->bytes -= $bytesToSubtract;
         } else {
             $this->bytes = 0;
