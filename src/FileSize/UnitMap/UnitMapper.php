@@ -15,7 +15,7 @@ class UnitMapper
      *
      * @var array
      */
-    private $mappedStrings = [];
+    private $cache = [];
 
     /**
      * Map an arbitrary unit string to a unit map key.
@@ -29,15 +29,15 @@ class UnitMapper
             return UnitMap::BYTE;
         }
 
-        if (isset($this->mappedStrings[$unitString])) {
-            return $this->mappedStrings[$unitString];
+        if (isset($this->cache[$unitString])) {
+            return $this->cache[$unitString];
         }
 
         $sanitizedString = self::sanitizeUnitString($unitString);
 
         foreach (UnitMap::$map as $key => $list) {
             if (in_array($sanitizedString, $list)) {
-                $this->mappedStrings[$unitString] = $key;
+                $this->cache[$unitString] = $key;
                 return $key;
             }
         }
