@@ -46,10 +46,6 @@ class UnitMapper
      */
     public function keyFromString($unitString)
     {
-        if ($unitString === UnitMap::BYTE) {
-            return UnitMap::BYTE;
-        }
-
         if (isset($this->cache[$unitString])) {
             return $this->cache[$unitString];
         }
