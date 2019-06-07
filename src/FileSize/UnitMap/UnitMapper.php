@@ -11,11 +11,32 @@ use ChrisUllyott\FileSize\Exception\FileSizeException;
 class UnitMapper
 {
     /**
+     * A store of unit map keys.
+     *
+     * @var array
+     */
+    private $keys = [];
+
+    /**
      * A store of previously mapped unit strings.
      *
      * @var array
      */
     private $cache = [];
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $keyStrings = array_keys(UnitMap::$map);
+        $keyIndeces = array_flip($keyStrings);
+
+        $this->keys = [
+            'by_index' => $keyStrings,
+            'by_string' => $keyIndeces
+        ];
+    }
 
     /**
      * Map an arbitrary unit string to a unit map key.
@@ -53,7 +74,7 @@ class UnitMapper
      */
     public function indexFromKey($key)
     {
-        return array_search($key, array_keys(UnitMap::$map));
+        return $this->keys['by_string'][$key];
     }
 
     /**
@@ -64,9 +85,7 @@ class UnitMapper
      */
     public function keyFromIndex($index)
     {
-        $keys = array_keys(UnitMap::$map);
-
-        return $keys[$index];
+        return $this->keys['by_index'][$index];
     }
 
     /**
