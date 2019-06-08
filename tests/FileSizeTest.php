@@ -53,14 +53,14 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
         $size = new FileSize('300K');
         $size->divideBy(2);
 
-        $this->assertSame($size->as('KB'), (float) 150);
+        $this->assertSame($size->as('KiB'), (float) 150);
     }
 
     public function testConvertUp()
     {
         $size = new FileSize('123456789 TB');
 
-        $this->assertSame($size->as('exabytes', 2), 5.74);
+        $this->assertSame($size->as('exabytes'), 5.74);
     }
 
     public function testConvertDown()
@@ -79,17 +79,17 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
 
     public function testAutoSmall()
     {
-        $size = new FileSize('1234522678.12 KB');
+        $size = new FileSize('1.2345 KB');
+        $size->divideBy(3);
 
-        $this->assertSame($size->asAuto(), '1.15 TB');
+        $this->assertSame($size->asAuto(), '422 B');
     }
 
     public function testAutoLarge()
     {
-        $size = new FileSize('1.2345 KB');
-        $size->multiplyBy(0.333);
+        $size = new FileSize('1234522678.12 KB');
 
-        $this->assertSame($size->asAuto(2), '422 B');
+        $this->assertSame($size->asAuto(), '1.15 TB');
     }
 
     public function testAutoRounding()
