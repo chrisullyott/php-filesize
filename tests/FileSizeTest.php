@@ -10,14 +10,14 @@ use ChrisUllyott\FileSize;
 
 class FileSizeTest extends \PHPUnit_Framework_TestCase
 {
-    public function testBytes1()
+    public function testBytes()
     {
         $size = new FileSize('128974848');
 
         $this->assertSame($size->as('B'), 128974848);
     }
 
-    public function testBytes2()
+    public function testBytesRounding()
     {
         $size = new FileSize('99.7 bytes');
 
@@ -77,14 +77,14 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($size->as('GB'), (float) 525);
     }
 
-    public function testAuto1()
+    public function testAutoSmall()
     {
         $size = new FileSize('1234522678.12 KB');
 
         $this->assertSame($size->asAuto(), '1.15 TB');
     }
 
-    public function testAuto2()
+    public function testAutoLarge()
     {
         $size = new FileSize('1.2345 KB');
         $size->multiplyBy(0.333);
@@ -92,7 +92,7 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($size->asAuto(2), '422 B');
     }
 
-    public function testAuto3()
+    public function testAutoRounding()
     {
         $size = new FileSize('158.1983 mb');
 
