@@ -6,17 +6,26 @@
 
 namespace ChrisUllyott\FileSize\Math;
 
+use ChrisUllyott\FileSize\Exception\FileSizeException;
+
 class Math
 {
     /**
-     * Get the number of bytes per factor. (2^10 = 1,024; 2^20 = 1,048,576...)
+     * Get the number of bytes per factor. In base 2, the first factor is 1024,
+     * while in decimal it is 1000.
      *
      * @param  int $factor
      * @return int
      */
-    public static function bytesByFactor($factor)
+    public static function bytesByFactor($factor, $base)
     {
-        return 2 ** (10 * $factor);
+        if ($base === 2) {
+            return $base ** (10 * $factor);
+        } elseif ($base === 10) {
+            return $base ** (3 * $factor);
+        }
+
+        throw new FileSizeException('Invalid number base (use either 2 or 10)');
     }
 
     /**
