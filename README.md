@@ -3,7 +3,7 @@
 
 # php-filesize
 
-A flexible library for calculating binary file sizes and converting between units.
+A flexible library for calculating file sizes and converting between units.
 
 ### Installation
 
@@ -15,7 +15,7 @@ $ composer require chrisullyott/php-filesize
 
 ### Instantiate
 
-A `FileSize` object, both on creation and within its methods, understands just about any expression of data size in bytes. You may instantiate it with a size, or leave it initially empty.
+A `FileSize` object, both on creation and within its methods, understands just about any expression of data size. You may instantiate it with a size, or leave it initially empty.
 
 ```php
 use ChrisUllyott\FileSize;
@@ -59,10 +59,15 @@ $size->add('2G')
 echo $size->asAuto(); // '10.00 GB'
 ```
 
-### Details
+### Number base
 
-- Since this is in binary, remember that `500 MB` translates to `0.49 GB` and not exactly `0.5 GB` as you'd expect in the less accurate decimal system. See [Wikipedia](https://en.wikipedia.org/wiki/Binary_prefix).
-- Exporting bytes returns an `int`, otherwise a `float`.
+The second argument of the constructor is the number base, which accepts either `2` (binary) or `10` (decimal). We use binary by default. To handle sizes in decimal:
+
+```php
+$size = new FileSize(10921134, 10);
+
+echo $size->asAuto(); // '10.92 MB'
+```
 
 ### Contribute
 
