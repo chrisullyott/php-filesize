@@ -134,4 +134,14 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($size->asAuto(), '158.2 MB');
     }
+
+    /**
+     * Test a decimal base conversion.
+     */
+    public function testDecimalBase()
+    {
+        $size = new FileSize(10921134, 10);
+
+        $this->assertSame($size->asAuto(), '10.92 MB');
+    }
 }
