@@ -14,6 +14,13 @@ use ChrisUllyott\FileSize\Parser\SizeStringParser;
 class FileSize
 {
     /**
+     * The number base.
+     *
+     * @var int
+     */
+    private $base;
+
+    /**
      * The number of bytes in this filesize.
      *
      * @var int
@@ -32,10 +39,11 @@ class FileSize
      *
      * @param string|int $size Such as '100 MB'
      */
-    public function __construct($size = null)
+    public function __construct($size = null, $base = 2)
     {
         $this->unitMapper = new UnitMapper();
 
+        $this->base = $base;
         $this->bytes = $size ? $this->sizeToBytes($size) : 0;
     }
 
@@ -132,7 +140,7 @@ class FileSize
     public function asAuto($precision = 2)
     {
         $factor = Math::factorByBytes($this->bytes);
-        $size = $this->bytes / Math::bytesByFactor($factor);
+        $size = $this->bytes / Math::bytesByFactor($factor, $this->base);
         $unit = $this->unitMapper->keyFromIndex($factor);
 
         return self::formatNumber($size, $precision, $unit);
@@ -155,7 +163,8 @@ class FileSize
         if ($fromUnit !== $toUnit) {
             $index1 = $this->unitMapper->indexFromKey($fromUnit);
             $index2 = $this->unitMapper->indexFromKey($toUnit);
-            $size = (float) $size * Math::bytesByFactor($index1 - $index2);
+            $factor = $index1 - $index2;
+            $size = (float) $size * Math::bytesByFactor($factor, $this->base);
         }
 
         if ($toUnit === UnitMap::BYTE) {
