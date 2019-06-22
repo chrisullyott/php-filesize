@@ -11,8 +11,7 @@ use ChrisUllyott\FileSize\Exception\FileSizeException;
 class Math
 {
     /**
-     * Get the number of bytes per factor. In base 2, the first factor is 1024,
-     * while in decimal it is 1000.
+     * Get the number of bytes per factor.
      *
      * @param  int $factor
      * @return int
@@ -20,9 +19,9 @@ class Math
     public static function bytesByFactor($factor, $base)
     {
         if ($base === 2) {
-            return $base ** (10 * $factor);
+            return 1024 ** $factor;
         } elseif ($base === 10) {
-            return $base ** (3 * $factor);
+            return 1000 ** $factor;
         }
 
         throw new FileSizeException('Invalid number base (use either 2 or 10)');
