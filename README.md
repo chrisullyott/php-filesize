@@ -31,7 +31,7 @@ Use `as()` to export the size in another format.
 echo $size->as('MB'); // 512000
 ```
 
-The second parameter specifies decimal precision (default is 2).
+The second argument specifies decimal precision (default is 2).
 
 ```php
 echo $size->as('TB', 3); // 0.488
@@ -41,6 +41,7 @@ Use `asAuto()` to simply get a user-friendly string.
 
 ```php
 $size = new FileSize('1234522678.12 KB');
+
 echo $size->asAuto(); // '1.15 TB'
 ```
 
