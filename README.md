@@ -62,7 +62,7 @@ echo $size->asAuto(); // '10.00 GB'
 
 You may also use `add()` and `subtract()` with an array of values:
 
-```
+```php
 $size->add(['50mb', '140mb', '1.2mb']);
 ```
 
