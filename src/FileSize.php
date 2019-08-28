@@ -64,12 +64,42 @@ class FileSize
     }
 
     /**
+     * Add one or many filesizes.
+     *
+     * @param array|string|int $sizes
+     * @return self
+     */
+    public function add($sizes)
+    {
+        foreach ((array) $sizes as $size) {
+            $this->addSize($size);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Subtract one or many filesizes.
+     *
+     * @param array|string|int $sizes
+     * @return self
+     */
+    public function subtract($sizes)
+    {
+        foreach ((array) $sizes as $size) {
+            $this->subtractSize($size);
+        }
+
+        return $this;
+    }
+
+    /**
      * Add to this filesize.
      *
      * @param string|int $size Such as '100 MB'
      * @return self
      */
-    public function add($size)
+    private function addSize($size)
     {
         $this->bytes += $this->sizeToBytes($size);
 
@@ -82,7 +112,7 @@ class FileSize
      * @param string|int $size Such as '100 MB'
      * @return self
      */
-    public function subtract($size)
+    private function subtractSize($size)
     {
         $bytesToSubtract = $this->sizeToBytes($size);
 

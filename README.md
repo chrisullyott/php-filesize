@@ -60,6 +60,12 @@ $size->add('2G')
 echo $size->asAuto(); // '10.00 GB'
 ```
 
+You may also use `add()` and `subtract()` with an array of values:
+
+```
+$size->add(['50mb', '140mb', '1.2mb']);
+```
+
 ### Number base
 
 The second argument of the constructor is the number base, which accepts either `2` (binary) or `10` (decimal). We use binary by default. To handle sizes in decimal:

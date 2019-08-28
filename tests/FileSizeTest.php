@@ -53,6 +53,17 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test adding an array of items.
+     */
+    public function testAddMany()
+    {
+        $size = new FileSize();
+        $size->add(['50mb', '140mb', '1.2mb']);
+
+        $this->assertSame($size->as('MB'), 191.2);
+    }
+
+    /**
      * Test #multiplyBy.
      */
     public function testMultiplyBy()
