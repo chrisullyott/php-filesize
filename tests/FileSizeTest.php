@@ -49,7 +49,7 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
         $size = new FileSize('10MB');
         $size->add('-20MB');
 
-        $this->assertSame($size->as('MB'), -10.0);
+        $this->assertSame($size->asAuto(), '-10 MB');
     }
 
     /**
@@ -71,7 +71,7 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
         $size = new FileSize('10MB');
         $size->subtract('-20MB');
 
-        $this->assertSame($size->as('MB'), 30.0);
+        $this->assertSame($size->asAuto(), '30 MB');
     }
 
     /**
