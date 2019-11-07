@@ -18,7 +18,7 @@ class SizeStringParser
      * - 123 MB
      * - 1 gigabytes
      */
-    const SIZE_STRING_PATTERN = '/^([0-9\.]+)\s*?([A-Za-z]+)?$/';
+    const SIZE_STRING_PATTERN = '/^([0-9\.-]+)\s*?([A-Za-z]+)?$/';
 
     /**
      * Parse a size string into its parts (value, unit).

@@ -42,6 +42,17 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test #add with a negative value.
+     */
+    public function testAddNegative()
+    {
+        $size = new FileSize('10MB');
+        $size->add('-20MB');
+
+        $this->assertSame($size->as('MB'), -10.0);
+    }
+
+    /**
      * Test #subtract.
      */
     public function testSubtract()
@@ -50,6 +61,17 @@ class FileSizeTest extends \PHPUnit_Framework_TestCase
         $size->subtract('150 kilobytes');
 
         $this->assertSame($size->as('B'), 128821248);
+    }
+
+    /**
+     * Test #subtract with a negative value.
+     */
+    public function testSubtractNegative()
+    {
+        $size = new FileSize('10MB');
+        $size->subtract('-20MB');
+
+        $this->assertSame($size->as('MB'), 30.0);
     }
 
     /**

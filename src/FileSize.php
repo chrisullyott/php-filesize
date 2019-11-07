@@ -107,20 +107,14 @@ class FileSize
     }
 
     /**
-     * Subtract from this filesize, stopping at 0 bytes.
+     * Subtract from this filesize.
      *
      * @param string|int $size Such as '100 MB'
      * @return self
      */
     private function subtractSize($size)
     {
-        $bytesToSubtract = $this->sizeToBytes($size);
-
-        if ($bytesToSubtract <= $this->bytes) {
-            $this->bytes -= $bytesToSubtract;
-        } else {
-            $this->bytes = 0;
-        }
+        $this->bytes -= $this->sizeToBytes($size);
 
         return $this;
     }

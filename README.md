@@ -60,6 +60,12 @@ $size->add('2G')
 echo $size->asAuto(); // '10.00 GB'
 ```
 
+Negative values are supported. In the case below, 1.2 megabytes are subtracted:
+
+```php
+$size->add('-1.2mb');
+```
+
 You may also use `add()` and `subtract()` with an array of values:
 
 ```php
