@@ -156,7 +156,7 @@ class FileSize
     }
 
     /**
-     * Get the filesize in a human-friendly string.
+     * Get the filesize as a human-friendly string.
      *
      * @param  int $precision Round to this many decimal places
      * @return string
@@ -168,6 +168,16 @@ class FileSize
         $unit = $this->unitMapper->keyFromIndex($factor);
 
         return self::formatNumber($size, $precision, $unit);
+    }
+
+    /**
+     * Print the filesize as a human-friendly string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->asAuto();
     }
 
     /**
