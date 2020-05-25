@@ -3,7 +3,7 @@
 
 # php-filesize
 
-A flexible library for calculating file sizes and converting between units.
+A flexible package for handling file sizes and converting between units.
 
 ### Installation
 
@@ -81,7 +81,3 @@ $size = new FileSize(10921134, 10);
 
 echo $size->asAuto(); // '10.92 MB'
 ```
-
-### Contribute
-
-Did this library help? Let me know!
