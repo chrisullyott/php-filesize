@@ -2,8 +2,6 @@
 
 /**
  * Tests for FileSize.
- *
- * @author Chris Ullyott <chris@monkdevelopment.com>
  */
 
 use ChrisUllyott\FileSize;
