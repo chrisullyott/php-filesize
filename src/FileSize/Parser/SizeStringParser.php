@@ -34,9 +34,6 @@ class SizeStringParser
             throw new FileSizeException("Could not parse \"{$size}\"");
         }
 
-        $value = $matches[1];
-        $unit = isset($matches[2]) ? $matches[2] : null;
-
-        return (object) ['value' => $value, 'unit' => $unit];
+        return (object) ['value' => $matches[1], 'unit' => $matches[2] ?? null];
     }
 }
