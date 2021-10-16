@@ -10,9 +10,9 @@ use PHPUnit\Framework\TestCase;
 class FileSizeTest extends TestCase
 {
     /**
-     * Test a numeric string input.
+     * @test numeric string input.
      */
-    public function testBytes()
+    public function bytes()
     {
         $size = new FileSize('128974848');
 
@@ -20,9 +20,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test that "partial bytes" are rounded up.
+     * @test "partial bytes" are rounded up.
      */
-    public function testBytesRounding()
+    public function bytesRounding()
     {
         $size = new FileSize('99.7 bytes');
 
@@ -30,9 +30,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test #add.
+     * @test #add.
      */
-    public function testAdd()
+    public function add()
     {
         $size = new FileSize('123 megabytes');
         $size->add('150 KiB');
@@ -41,9 +41,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test #add with a negative value.
+     * @test #add with a negative value.
      */
-    public function testAddNegative()
+    public function addNegative()
     {
         $size = new FileSize('10MB');
         $size->add('-20MB');
@@ -52,9 +52,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test #subtract.
+     * @test #subtract.
      */
-    public function testSubtract()
+    public function subtract()
     {
         $size = new FileSize('123M');
         $size->subtract('150 kilobytes');
@@ -63,9 +63,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test #subtract with a negative value.
+     * @test #subtract with a negative value.
      */
-    public function testSubtractNegative()
+    public function subtractNegative()
     {
         $size = new FileSize('10MB');
         $size->subtract('-20MB');
@@ -74,31 +74,31 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test adding an array of items.
+     * @test adding an array of items.
      */
-    public function testAddMany()
+    public function addMany()
     {
         $size = new FileSize();
         $size->add(['50mb', '140mb', '1.2mb']);
 
-        $this->assertSame($size->as('MB'), 191.2);
+        $this->assertSame($size->as('MB'), (float) 191.2);
     }
 
     /**
-     * Test #multiplyBy.
+     * @test #multiplyBy.
      */
-    public function testMultiplyBy()
+    public function multiplyBy()
     {
         $size = new FileSize('425.51 m');
         $size->multiplyBy(9.125);
 
-        $this->assertSame($size->as('GB'), 3.79);
+        $this->assertSame($size->as('GB'), (float) 3.79);
     }
 
     /**
-     * Test #divideBy.
+     * @test #divideBy.
      */
-    public function testDivideBy()
+    public function divideBy()
     {
         $size = new FileSize('300K');
         $size->divideBy(2);
@@ -107,9 +107,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test upward unit conversion.
+     * @test upward unit conversion.
      */
-    public function testConvertUp()
+    public function convertUp()
     {
         $size = new FileSize('123456789 TB');
 
@@ -117,9 +117,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test downward unit conversion.
+     * @test downward unit conversion.
      */
-    public function testConvertDown()
+    public function convertDown()
     {
         $size = new FileSize('1 Gigabyte');
 
@@ -127,9 +127,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test when the unit has not changed.
+     * @test when the unit has not changed.
      */
-    public function testNoConvert()
+    public function noConvert()
     {
         $size = new FileSize('525 Gibibytes');
 
@@ -137,9 +137,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test auto-formatting for a small value.
+     * @test auto-formatting for a small value.
      */
-    public function testAutoSmall()
+    public function autoSmall()
     {
         $size = new FileSize('1.2345 KB');
         $size->divideBy(3);
@@ -148,9 +148,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test auto-formatting for a large value.
+     * @test auto-formatting for a large value.
      */
-    public function testAutoLarge()
+    public function autoLarge()
     {
         $size = new FileSize('1234522678.12 KB');
 
@@ -158,9 +158,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test the rounding in auto-formatting (should not leave trailing zeros).
+     * @test the rounding in auto-formatting (should not leave trailing zeros).
      */
-    public function testAutoRounding()
+    public function autoRounding()
     {
         $size = new FileSize('158.1983 mb');
 
@@ -168,7 +168,7 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * Test a decimal base conversion.
+     * @test a decimal base conversion.
      */
     public function testDecimalBase()
     {
