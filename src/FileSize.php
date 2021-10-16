@@ -38,6 +38,7 @@ class FileSize
      * Constructor.
      *
      * @param string|int $size Such as '100 MB'
+     * @param int $base The number base
      */
     public function __construct($size = null, $base = 2)
     {
