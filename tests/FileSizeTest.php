@@ -5,8 +5,9 @@
  */
 
 use ChrisUllyott\FileSize;
+use PHPUnit\Framework\TestCase;
 
-class FileSizeTest extends \PHPUnit_Framework_TestCase
+class FileSizeTest extends TestCase
 {
     /**
      * Test a numeric string input.
