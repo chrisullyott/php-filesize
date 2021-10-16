@@ -31,6 +31,12 @@ Use `as()` to export the size in another format.
 echo $size->as('MB'); // 512000
 ```
 
+A variety of file size strings are supported here as well.
+
+```php
+echo $size->as('megabytes'); // 512000
+```
+
 The second argument specifies decimal precision (default is 2).
 
 ```php
@@ -63,7 +69,7 @@ echo $size; // '1.15 TB'
 
 ### Modify the size
 
-To make changes, use `add()`, `subtract()`, `multiplyBy()`, and `divideBy()`. A variety of file size strings are supported here as well.
+To make changes, use `add()`, `subtract()`, `multiplyBy()`, and `divideBy()`.
 
 ```php
 $size = new FileSize('4 GB');
