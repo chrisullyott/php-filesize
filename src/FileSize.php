@@ -137,7 +137,7 @@ class FileSize
      */
     public function multiplyBy($n)
     {
-        $this->bytes = self::formatBytes($this->bytes * $n);
+        $this->bytes = $this->formatBytes($this->bytes * $n);
 
         return $this;
     }
@@ -212,7 +212,7 @@ class FileSize
         }
 
         if ($toUnit === UnitMap::BYTE) {
-            return self::formatBytes($size);
+            return $this->formatBytes($size);
         }
 
         return $this->formatNumber($size, $precision);
@@ -241,7 +241,7 @@ class FileSize
      * @param  string $number A numeric string or float
      * @return int
      */
-    private static function formatBytes($number)
+    private function formatBytes($number)
     {
         return (int) ceil($number);
     }
