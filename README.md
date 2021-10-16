@@ -37,7 +37,7 @@ A variety of file size strings are supported here as well.
 echo $size->as('megabytes'); // 512000
 ```
 
-The second argument specifies decimal precision (default is 2).
+The second argument specifies decimal precision (default is `2`).
 
 ```php
 echo $size->as('TB', 3); // 0.488
@@ -79,7 +79,7 @@ $size->add('2G')
      ->multiplyBy(4)
      ->divideBy(2);
 
-echo $size->asAuto(); // '10.00 GB'
+echo $size; // '10.00 GB'
 ```
 
 Negative values are supported. In the case below, 1.2 megabytes are subtracted:
@@ -101,7 +101,7 @@ The second argument of the constructor is the number base, which accepts either 
 ```php
 $size = new FileSize(10921134, 10);
 
-echo $size->asAuto(); // '10.92 MB'
+echo $size; // '10.92 MB'
 ```
 
 ### Decimal separator
@@ -111,5 +111,5 @@ The third argument of the constructor is the decimal separator, which is a perio
 ```php
 $size = new FileSize('1.234.522.678,12 KB', 2, ',');
 
-echo $size->asAuto(); // '1,15 TB'
+echo $size; // '1,15 TB'
 ```
