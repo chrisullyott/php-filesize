@@ -14,18 +14,18 @@ use ChrisUllyott\FileSize\Parser\SizeStringParser;
 class FileSize
 {
     /**
-     * The number base.
-     *
-     * @var int
-     */
-    private $base;
-
-    /**
      * The number of bytes in this filesize.
      *
      * @var int
      */
     private $bytes;
+
+    /**
+     * The number base.
+     *
+     * @var int
+     */
+    private $base;
 
     /**
      * A UnitMapper object.
