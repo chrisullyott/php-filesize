@@ -81,3 +81,13 @@ $size = new FileSize(10921134, 10);
 
 echo $size->asAuto(); // '10.92 MB'
 ```
+
+### Decimal separator
+
+The third argument of the constructor is the decimal separator, which is a period `.` by default. Here, you can use a comma instead. The chosen decimal separator will be used both to parse numbers properly, and also to format them on output.
+
+```php
+$size = new FileSize('1.234.522.678,12 KB', 2, ',');
+
+echo $size->asAuto(); // '1,15 TB'
+```
