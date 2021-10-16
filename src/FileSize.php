@@ -28,6 +28,13 @@ class FileSize
     private $base;
 
     /**
+     * The character serving as the decimal separator.
+     *
+     * @var string
+     */
+    private $decimalMark;
+
+    /**
      * A UnitMapper object.
      *
      * @var UnitMapper
@@ -39,12 +46,15 @@ class FileSize
      *
      * @param string|int $size Such as '100 MB'
      * @param int $base The number base
+     * @param string $decimalMark The character serving as the decimal separator
      */
-    public function __construct($size = null, $base = 2)
+    public function __construct($size = null, $base = 2, $decimalMark = '.')
     {
         $this->unitMapper = new UnitMapper();
 
         $this->base = $base;
+        $this->decimalMark = $decimalMark;
+
         $this->bytes = $size ? $this->sizeToBytes($size) : 0;
     }
 
@@ -57,9 +67,7 @@ class FileSize
     private function sizeToBytes($size)
     {
         $object = SizeStringParser::parse($size);
-
-        $value = floatval($object->value);
-
+        $value = $this->toFloatValue($object->value);
         $unit = $object->unit ?? UnitMap::BYTE;
 
         return $this->convert($value, $unit, UnitMap::BYTE);
@@ -169,7 +177,7 @@ class FileSize
         $size = $this->bytes / Math::bytesByFactor($factor, $this->base);
         $unit = $this->unitMapper->keyFromIndex($factor);
 
-        return self::formatNumber($size, $precision, $unit);
+        return $this->formatNumber($size, $precision, $unit);
     }
 
     /**
@@ -207,7 +215,24 @@ class FileSize
             return self::formatBytes($size);
         }
 
-        return self::formatNumber($size, $precision);
+        return $this->formatNumber($size, $precision);
+    }
+
+    /**
+     * Convert a numeric string to a float, accounting for the decimal separator.
+     *
+     * @param  string $value A numeric string
+     * @return float
+     */
+    private function toFloatValue($value)
+    {
+        $value = strval($value);
+
+        $chars = '0-9' . preg_quote('-' . $this->decimalMark);
+        $value = preg_replace("/[^{$chars}]/", '', $value);
+        $value = str_replace($this->decimalMark, '.', $value);
+
+        return floatval($value);
     }
 
     /**
@@ -229,9 +254,13 @@ class FileSize
      * @param  string     $unit      A unit string to append
      * @return float|string
      */
-    private static function formatNumber($value, $precision = null, $unit = null)
+    private function formatNumber($value, $precision = null, $unit = null)
     {
         $value = !is_null($precision) ? round($value, $precision) : $value;
+
+        if ($this->decimalMark !== '.') {
+            $value = str_replace('.', $this->decimalMark, $value);
+        }
 
         return $unit ? "{$value} {$unit}" : $value;
     }
