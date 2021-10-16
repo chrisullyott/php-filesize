@@ -15,10 +15,10 @@ class SizeStringParser
      *
      * - 150
      * - 10k
-     * - 123 MB
+     * - 123,4 MB
      * - 1 gigabytes
      */
-    const SIZE_STRING_PATTERN = '/^(-?[0-9\.]+)\s*([A-z]+)?$/';
+    const SIZE_STRING_PATTERN = '/^(-?[0-9\.\, ]+)\s*([a-zA-Z]+)?$/';
 
     /**
      * Parse a size string into its parts (value, unit).
@@ -30,7 +30,7 @@ class SizeStringParser
     {
         preg_match(self::SIZE_STRING_PATTERN, $size, $matches);
 
-        if (!isset($matches[1]) || !is_numeric($matches[1])) {
+        if (empty($matches[1])) {
             throw new FileSizeException("Could not parse \"{$size}\"");
         }
 
