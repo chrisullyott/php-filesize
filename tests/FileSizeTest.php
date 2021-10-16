@@ -170,10 +170,30 @@ class FileSizeTest extends TestCase
     /**
      * @test a decimal base conversion.
      */
-    public function testDecimalBase()
+    public function decimalBase()
     {
         $size = new FileSize(10921134, 10);
 
         $this->assertSame($size->asAuto(), '10.92 MB');
+    }
+
+    /**
+     * @test a custom decimal separator.
+     */
+    public function decimalMark()
+    {
+        $size = new FileSize(10921134, 10, ',');
+
+        $this->assertSame($size->asAuto(), '10,92 MB');
+    }
+
+    /**
+     * @test custom decimal separators and thousands marks.
+     */
+    public function decimalAndThousandsMarks()
+    {
+        $size = new FileSize('1.234.522.678,12 KB', 2, ',');
+
+        $this->assertSame($size->asAuto(), '1,15 TB');
     }
 }
