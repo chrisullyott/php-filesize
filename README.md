@@ -37,12 +37,28 @@ The second argument specifies decimal precision (default is 2).
 echo $size->as('TB', 3); // 0.488
 ```
 
-Use `asAuto()` to simply get a user-friendly string.
+### User-friendly formatting
+
+Use `asAuto()` to get a user-friendly string:
 
 ```php
 $size = new FileSize('1234522678.12 KB');
 
 echo $size->asAuto(); // '1.15 TB'
+```
+
+Optionally, `asAuto()` also provides a decimal precision.
+
+```php
+$size = new FileSize('1234522678.12 KB');
+
+echo $size->asAuto(5); // '1.14974 TB'
+```
+
+Or, simply `echo` the object for the same functionality:
+
+```php
+echo $size; // '1.15 TB'
 ```
 
 ### Modify the size
