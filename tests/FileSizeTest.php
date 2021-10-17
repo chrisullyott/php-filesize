@@ -196,4 +196,24 @@ class FileSizeTest extends TestCase
 
         $this->assertSame($size->asAuto(), '1,15 TB');
     }
+
+    /**
+     * @test
+     */
+    public function smallest_integer_is_supported()
+    {
+        $size = new FileSize(PHP_INT_MIN);
+
+        $this->assertIsNumeric($size->as('YB'));
+    }
+
+    /**
+     * @test
+     */
+    public function largest_integer_is_supported()
+    {
+        $size = new FileSize(PHP_INT_MAX);
+
+        $this->assertIsNumeric($size->as('YB'));
+    }
 }
