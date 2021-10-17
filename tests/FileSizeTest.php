@@ -12,6 +12,26 @@ class FileSizeTest extends TestCase
     /**
      * @test
      */
+    public function base_two_conversions_are_accurate()
+    {
+        $size = new FileSize(10921134, 2);
+
+        $this->assertSame($size->asAuto(), '10.42 MB');
+    }
+
+    /**
+     * @test
+     */
+    public function base_ten_conversions_are_accurate()
+    {
+        $size = new FileSize(10921134, 10);
+
+        $this->assertSame($size->asAuto(), '10.92 MB');
+    }
+
+    /**
+     * @test
+     */
     public function bytes_are_returned_as_an_integer()
     {
         $size = new FileSize('128974848');
@@ -155,16 +175,6 @@ class FileSizeTest extends TestCase
         $size = new FileSize('1234522678.12 KB');
 
         $this->assertSame($size->asAuto(), '1.15 TB');
-    }
-
-    /**
-     * @test
-     */
-    public function base_ten_conversions_are_accurate()
-    {
-        $size = new FileSize(10921134, 10);
-
-        $this->assertSame($size->asAuto(), '10.92 MB');
     }
 
     /**
