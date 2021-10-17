@@ -66,6 +66,8 @@ class FileSize
      */
     private function sizeToBytes($size)
     {
+        if (is_int($size)) return $size;
+
         $object = SizeStringParser::parse($size);
         $value = $this->toFloatValue($object->value);
         $unit = $object->unit ?? UnitMap::BYTE;

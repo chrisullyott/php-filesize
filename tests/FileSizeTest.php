@@ -10,9 +10,29 @@ use PHPUnit\Framework\TestCase;
 class FileSizeTest extends TestCase
 {
     /**
-     * @test numeric string input.
+     * @test
      */
-    public function bytes()
+    public function base_two_conversions_are_accurate()
+    {
+        $size = new FileSize(10921134, 2);
+
+        $this->assertSame($size->asAuto(), '10.42 MB');
+    }
+
+    /**
+     * @test
+     */
+    public function base_ten_conversions_are_accurate()
+    {
+        $size = new FileSize(10921134, 10);
+
+        $this->assertSame($size->asAuto(), '10.92 MB');
+    }
+
+    /**
+     * @test
+     */
+    public function bytes_are_returned_as_an_integer()
     {
         $size = new FileSize('128974848');
 
@@ -20,9 +40,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * @test "partial bytes" are rounded up.
+     * @test
      */
-    public function bytesRounding()
+    public function partial_bytes_are_rounded_up()
     {
         $size = new FileSize('99.7 bytes');
 
@@ -30,9 +50,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * @test #add.
+     * @test
      */
-    public function add()
+    public function sizes_can_be_added()
     {
         $size = new FileSize('123 megabytes');
         $size->add('150 KiB');
@@ -41,64 +61,64 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * @test #add with a negative value.
+     * @test
      */
-    public function addNegative()
+    public function negative_sizes_can_be_added()
     {
-        $size = new FileSize('10MB');
-        $size->add('-20MB');
+        $size = new FileSize('10 MB');
+        $size->add('-20 MB');
 
         $this->assertSame($size->asAuto(), '-10 MB');
     }
 
     /**
-     * @test #subtract.
+     * @test
      */
-    public function subtract()
+    public function sizes_can_be_subtracted()
     {
-        $size = new FileSize('123M');
+        $size = new FileSize('123 M');
         $size->subtract('150 kilobytes');
 
         $this->assertSame($size->as('B'), 128821248);
     }
 
     /**
-     * @test #subtract with a negative value.
+     * @test
      */
-    public function subtractNegative()
+    public function negative_sizes_can_be_subtracted()
     {
-        $size = new FileSize('10MB');
-        $size->subtract('-20MB');
+        $size = new FileSize('10 MB');
+        $size->subtract('-20 MB');
 
         $this->assertSame($size->asAuto(), '30 MB');
     }
 
     /**
-     * @test adding an array of items.
+     * @test
      */
-    public function addMany()
+    public function arrays_can_be_added()
     {
         $size = new FileSize();
         $size->add(['50mb', '140mb', '1.2mb']);
 
-        $this->assertSame($size->as('MB'), (float) 191.2);
+        $this->assertSame($size->as('MB'), 191.2);
     }
 
     /**
-     * @test #multiplyBy.
+     * @test
      */
-    public function multiplyBy()
+    public function sizes_can_be_multiplied()
     {
         $size = new FileSize('425.51 m');
         $size->multiplyBy(9.125);
 
-        $this->assertSame($size->as('GB'), (float) 3.79);
+        $this->assertSame($size->as('GB'), 3.79);
     }
 
     /**
-     * @test #divideBy.
+     * @test
      */
-    public function divideBy()
+    public function sizes_can_be_divided()
     {
         $size = new FileSize('300K');
         $size->divideBy(2);
@@ -107,9 +127,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * @test upward unit conversion.
+     * @test
      */
-    public function convertUp()
+    public function sizes_can_be_converted_up()
     {
         $size = new FileSize('123456789 TB');
 
@@ -117,29 +137,29 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * @test downward unit conversion.
+     * @test
      */
-    public function convertDown()
+    public function sizes_can_be_converted_down()
     {
-        $size = new FileSize('1 Gigabyte');
+        $size = new FileSize('1 GB');
 
-        $this->assertSame($size->as('B'), 1073741824);
+        $this->assertSame($size->as('megabytes'), (float) 1024);
     }
 
     /**
-     * @test when the unit has not changed.
+     * @test
      */
-    public function noConvert()
+    public function size_value_is_unchanged_without_conversion()
     {
-        $size = new FileSize('525 Gibibytes');
+        $size = new FileSize('525 GB');
 
         $this->assertSame($size->as('GB'), (float) 525);
     }
 
     /**
-     * @test auto-formatting for a small value.
+     * @test
      */
-    public function autoSmall()
+    public function friendly_formatting_is_valid_for_small_values()
     {
         $size = new FileSize('1.2345 KB');
         $size->divideBy(3);
@@ -148,9 +168,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * @test auto-formatting for a large value.
+     * @test
      */
-    public function autoLarge()
+    public function friendly_formatting_is_valid_for_large_values()
     {
         $size = new FileSize('1234522678.12 KB');
 
@@ -158,29 +178,9 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * @test the rounding in auto-formatting (should not leave trailing zeros).
+     * @test
      */
-    public function autoRounding()
-    {
-        $size = new FileSize('158.1983 mb');
-
-        $this->assertSame($size->asAuto(), '158.2 MB');
-    }
-
-    /**
-     * @test a decimal base conversion.
-     */
-    public function decimalBase()
-    {
-        $size = new FileSize(10921134, 10);
-
-        $this->assertSame($size->asAuto(), '10.92 MB');
-    }
-
-    /**
-     * @test a custom decimal separator.
-     */
-    public function decimalMark()
+    public function custom_decimal_mark_is_supported()
     {
         $size = new FileSize(10921134, 10, ',');
 
@@ -188,12 +188,32 @@ class FileSizeTest extends TestCase
     }
 
     /**
-     * @test custom decimal separators and thousands marks.
+     * @test
      */
-    public function decimalAndThousandsMarks()
+    public function custom_decimal_and_thousands_marks_are_supported()
     {
         $size = new FileSize('1.234.522.678,12 KB', 2, ',');
 
         $this->assertSame($size->asAuto(), '1,15 TB');
+    }
+
+    /**
+     * @test
+     */
+    public function smallest_integer_is_supported()
+    {
+        $size = new FileSize(PHP_INT_MIN);
+
+        $this->assertIsNumeric($size->as('YB'));
+    }
+
+    /**
+     * @test
+     */
+    public function largest_integer_is_supported()
+    {
+        $size = new FileSize(PHP_INT_MAX);
+
+        $this->assertIsNumeric($size->as('YB'));
     }
 }
